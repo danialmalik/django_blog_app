@@ -1,0 +1,29 @@
+{% extends 'base/base_layout.html' %}
+{% load static %}
+
+{% block scripts %}
+<script type='text/javascript' src="{% static 'blogs/js/post_edit.js' %}"></script>
+<script>
+    var post_details_api = "{% url 'blogs_api:posts-detail' post.id %}"
+    var redirect_url = "{% url 'blogs:my_posts' %}"
+</script>
+{% endblock %}
+
+
+{% block content %}
+
+
+<div class="container">
+    <form id="form_update" style="margin:50px" class='col-sm-8' method="post" action="">
+        {% include 'base/form_renderer.html' with form=form %}
+        <button class='btn-primary' id="update" type="submit">Update Post</button>
+
+    </form>
+    <form id='form_delete' style="margin:50px" class='col-sm-8'
+          method="post" action="{% url 'blogs:post_delete' post.id %}">
+        {% csrf_token %}
+        <button class='btn-danger' id="delete" type="submit">Delete Post</button>
+
+    </form>
+</div>
+{% endblock %}

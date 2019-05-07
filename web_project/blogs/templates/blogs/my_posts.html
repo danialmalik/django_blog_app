@@ -1,0 +1,41 @@
+{% extends 'base/base_layout.html' %}
+{% load static %}
+
+{% block scripts %}
+
+<script type='text/javascript' src="{% static 'blogs/js/posts_list.js' %}"></script>
+<script>
+    var posts_api = '{% url "blogs_api:posts-list" %}' ;
+    var post_details_url = 'post_details/';
+    var isMyPosts = true;
+</script>
+
+{% endblock %}
+
+{% block content %}
+<div class="jumbotron">
+    <h1>
+        My Posts
+    </h1>
+</div>
+<div class="container-fluid justify-centered">
+    <a href='{% url "blogs:post_create" %} '>
+        <span class="btn btn-primary">Create new post</span>
+    </a>
+</div>
+<div class="row align-items-center justify-content-center">
+    <form class="form-inline" action="#" id="search">
+        <input id="search_key" class="form-control mr-sm-2" type="text" placeholder="Search">
+        <button class="btn btn-success" type="submit">Search</button>
+    </form>
+</div>
+<div class="container-fluid" id="container-posts">
+</div>
+
+
+<div class="container row">
+    <div class='col-sm-4'>
+    </div>
+    <span class="btn btn-primary" id="load-more"> Load more </span>
+</div>
+{% endblock %}

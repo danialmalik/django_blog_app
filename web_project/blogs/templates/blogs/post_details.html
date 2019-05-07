@@ -1,0 +1,103 @@
+{% extends 'base/base_layout.html' %}
+{% load static %}
+
+{% block scripts %}
+<script type='text/javascript' src="{% static 'blogs/js/post_details.js' %}"></script>
+<script>
+    var comments_api= "{% url 'blogs_api:comments-list' post.id %}";
+    var post_edit_url = "{% url 'blogs:post_edit' post.id %}"
+
+    var current_username = "{{ user.username }}";
+
+
+</script>
+{% endblock %}
+
+
+{% block content %}
+
+
+<div class="container">
+    <div class="container" style="margin:100px"></div>
+    <div class="row">
+
+        <div class="col-sm-12">
+            <p class="lead">
+            <h3>{{ post.title }}</h3>
+            </p>
+            <p><h5>by <strong>{{ post.posted_by }}</strong></h5></p>
+            {% if user.is_authenticated and post.posted_by == user %}
+            <a href="{% url 'blogs:post_edit' post.id %}"><span>Edit</span></a>
+            {% endif %}
+            <hr>
+
+            <h7>Posted on {{ post.posted_on }}</h7>
+            <br>
+            <h7>Last modified on {{ post.last_modified_on }}</h7>
+
+
+            <hr>
+            <p>
+                {{ post.content }}
+            </p>
+            <hr>
+
+            <!-- Modal for editing comments -->
+            <div class="modal fade model-centered" id="commentModal">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content from-group">
+
+                        <!-- Modal Header -->
+                        <div class="modal-header">
+                            <h4 class="modal-title">Edit comment</h4>
+                            <button type="button" class="close" data-dismiss="modal">x</button>
+                        </div>
+
+                        <!-- Modal body -->
+                        <form action="#" id="comment_edit">
+                            <div class="modal-body">
+
+                                <input type="hidden" id="id">
+                                <textarea id="comment_editbox"
+                                          class="form-control" style="min-width: 100%"></textarea>
+                            </div>
+
+                            <!-- Modal footer -->
+                            <div class="modal-footer">
+                                <button type="submit" class="btn btn-primary"
+                                        onclick="submitCommentEdit(event)">Submit changes
+                                </button>
+                            </div>
+
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Comments Form -->
+            <div class="card my-4">
+                <h5 class="card-header">Leave a Comment:</h5>
+                <div class="card-body">
+                    {% if user.is_authenticated %}
+                    <form id="new_comment" action="#">
+                        <div class="form-group">
+                      <textarea required="true" class="form-control" rows="3" id="id_content"
+                                name="content"></textarea>
+                            <input type="hidden" id="post_id" name="post" value={{ post.id }}>
+
+                        </div>
+                        <button type="submit" id="comment_submit" class="btn btn-primary">Submit
+                        </button>
+                    </form>
+                    {% else %}
+                    <a href="{% url 'users:login'%}"><span>Login to comment</span></a>
+
+                    {% endif %}
+                </div>
+            </div>
+
+            <div class="col-sm-12" id="comments_section">
+
+            </div>
+        </div>
+        {% endblock %}

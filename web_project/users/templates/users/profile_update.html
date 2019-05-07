@@ -1,0 +1,40 @@
+{% extends 'base/base_layout.html' %}
+{% load static %}
+{% load rest_framework %}
+
+
+{% block scripts %}
+<script type='text/javascript' src="{% static 'users/js/profile_update.js' %}"></script>
+<script>
+    var success_redirect_url = '{% url "users:profile_details" %}';
+    var profile_update_api = '{% url 'users_api:user_profile' user.profile.id %}';
+
+
+</script>
+{% endblock %}
+
+{% block content %}
+<div class="container">
+
+    <form style="margin:50px" class='col-sm-8' id="id_profile_form">
+        <div id="profile_picture_container" class="col-md-4 text-center" style="margin:20px">
+            <img id="profile_picture"
+                 name="profile_picture"
+                 class="rounded-circle" alt="No image" width="250px" height="250px"
+                 required="required"
+                 src=''>
+            <span id="remove_picture"
+                  class="btn btn-danger btn-sm"
+                  onclick='removeProfilePicture()'>
+                Remove picture
+            </span>
+        </div>
+
+        <div id="user_form">
+            {% include 'base/form_renderer.html' with form=user_form %}
+        </div>
+        {% include 'base/form_renderer.html' with form=profile_form %}
+        <button class='btn-primary' type="submit">Update</button>
+    </form>
+</div>
+{% endblock %}

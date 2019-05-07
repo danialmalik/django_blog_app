@@ -1,0 +1,23 @@
+{% extends 'base/base_layout.html' %}
+
+{% load static %}
+
+{% block scripts %}
+<script type='text/javascript' src="{% static 'blogs/js/post_create.js' %}"></script>
+<script>
+    var post_create_api = '{% url "blogs_api:posts-list" %}';
+    var redirect_url = "{% url 'blogs:my_posts' %}";
+
+</script>
+{% endblock %}
+
+{% block content %}
+
+
+<div class="container">
+    <form style="margin:50px" class='col-sm-8' method="post" action="">
+        {% include 'base/form_renderer.html' with form=form %}
+        <button id="create" class='btn-primary' type="submit">Create Post</button>
+    </form>
+</div>
+{% endblock %}

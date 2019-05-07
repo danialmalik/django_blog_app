@@ -1,0 +1,20 @@
+{% extends 'base/base_layout.html' %}
+{% load static %}
+
+{% block scripts %}
+<script type='text/javascript' src="{% static 'users/js/signup.js' %}"></script>
+<script>
+    var success_redirect_url = '{% url "users:login" %}';
+    var signup_api = '{% url "users_api:user_register" %}';
+</script>
+{% endblock %}
+
+{% block content %}
+
+<div class="container-fluid">
+    <form style="margin:50px" class='col-sm-12'>
+        {% include 'base/form_renderer.html' with form=form %}
+        <button class='btn-success' type="submit">Signup</button>
+    </form>
+</div>
+{% endblock %}
