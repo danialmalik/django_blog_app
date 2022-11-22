@@ -1,4 +1,4 @@
 Django==2.2.10
 djangorestframework==3.8.2
-Pillow==6.2.0
+Pillow==9.3.0
 
